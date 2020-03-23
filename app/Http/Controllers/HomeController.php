@@ -1,0 +1,30 @@
+<?php
+
+namespace App\Http\Controllers;
+
+use Illuminate\Http\Request;
+use App\Student;
+
+class HomeController extends Controller
+{
+    /**
+     * Create a new controller instance.
+     *
+     * @return void
+     */
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
+
+    /**
+     * Show the application dashboard.
+     *
+     * @return \Illuminate\Contracts\Support\Renderable
+     */
+    public function index()
+    {
+        $students = Student::orderBy('id', 'desc')->paginate(20);
+        return view('students.index', ['students' => $students]);
+    }
+}
